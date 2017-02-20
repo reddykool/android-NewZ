@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/list_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="@dimen/list_primary_text_size"
+        android:maxLines="2"
+        android:ellipsize="end"
+        tools:text="Title"/>
+
+    <TextView
+        android:id="@+id/list_item_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_title"
+        android:textSize="@dimen/list_secondary_text_size"
+        tools:text="Author"/>
+
+    <TextView
+        android:id="@+id/list_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_title"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/list_secondary_text_size"
+        tools:text="Date"/>
+
+    <TextView
+        android:id="@+id/list_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_title"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/list_secondary_text_size"
+        tools:text="Time"/>
+
+</RelativeLayout>

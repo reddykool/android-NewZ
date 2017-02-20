@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">NewZ</string>
+    <string name="empty_state_text">Unable to Load.\n Pls try again in sometime !</string>
+    <string name="loading_state_text">"Loading News..."</string>
+    <string name="no_internet_state_text">No Internet.\n Pls check internet connection and try again !</string>
+</resources>
