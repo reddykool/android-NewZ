@@ -8,6 +8,9 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -122,5 +125,34 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<List<NewsData>> loader) {
         mListAdapter.clear();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean menuItemHandled = false;
+        switch (item.getItemId()) {
+            case R.id.menu_refresh :
+                mProgressBar.setVisibility(View.VISIBLE);
+                Loader<List<NewsData>> loader = getLoaderManager().getLoader(NEWS_LOADER_ID);
+                loader.forceLoad();
+                menuItemHandled = true;
+                break;
+
+            case R.id.menu_settings :
+                menuItemHandled = true;
+                break;
+
+            case R.id.menu_about :
+                Toast.makeText(this, " Reddyz - The Z Company \n Contact : reddykool@gmail.com", Toast.LENGTH_LONG).show();
+                menuItemHandled = true;
+                break;
+        }
+        return menuItemHandled;
     }
 }
