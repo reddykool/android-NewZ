@@ -6,4 +6,15 @@
     <string name="settings">Settings</string>
     <string name="refresh">Refresh</string>
     <string name="about_us">About Us</string>
+
+    <string name="settings_sort_by_label">"Sort By"</string>
+    <string name="settings_sort_by_key" translatable="false">"sort_by"</string>
+    <string name="settings_sort_by_default" translatable="false">@string/settings_sort_by_top_value</string>
+
+    <string name="settings_sort_by_top_label">"Top News"</string>
+    <string name="settings_sort_by_top_value" translatable="false">"top"</string>
+
+    <string name="settings_sort_by_latest_label">"Latest News"</string>
+    <string name="settings_sort_by_latest_value" translatable="false">"latest"</string>
+
 </resources>

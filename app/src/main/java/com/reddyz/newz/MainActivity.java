@@ -140,11 +140,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.menu_refresh :
                 mProgressBar.setVisibility(View.VISIBLE);
                 Loader<List<NewsData>> loader = getLoaderManager().getLoader(NEWS_LOADER_ID);
-                loader.forceLoad();
+                NewsLoader newsLoader = (NewsLoader)loader;
+                newsLoader.setUrl(ESPN_NEWS_FETCH_URL);
+                newsLoader.forceLoad();
                 menuItemHandled = true;
                 break;
 
             case R.id.menu_settings :
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 menuItemHandled = true;
                 break;
 

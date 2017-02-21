@@ -19,6 +19,10 @@ public class NewsLoader extends AsyncTaskLoader<List<NewsData>> {
         mUrl = url;
     }
 
+    public void setUrl(String url) {
+        this.mUrl = url;
+    }
+
     @Override
     protected void onStartLoading() {
         forceLoad();
