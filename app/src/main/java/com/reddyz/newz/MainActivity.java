@@ -1,7 +1,11 @@
 package com.reddyz.newz;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_activity_id, new NewsFragment()).commit();
+
+        List<String> urlList = new ArrayList<String>();
+        urlList.add(ESPN_NEWS_FETCH_URL);
+        urlList.add(GOOGLE_NEWS_FETCH_URL);
+        urlList.add(THE_HINDU_NEWS_FETCH_URL);
+        urlList.add(TECH_CHUNCH_NEWS_FETCH_URL_test);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        NewsViewPagerAdapter pagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(), urlList);
+        viewPager.setAdapter(pagerAdapter);
     }
 }
