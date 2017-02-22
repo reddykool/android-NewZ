@@ -28,4 +28,14 @@ public class NewsViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mUrls.size();
     }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        //extract "source" from url(source=espn-cric-info&)
+        String urlString = mUrls.get(position);
+        int startIndex = urlString.indexOf("source=");
+        int endIndex = urlString.indexOf("&");
+        String name = urlString.substring(startIndex, endIndex);
+        return name;
+    }
 }
