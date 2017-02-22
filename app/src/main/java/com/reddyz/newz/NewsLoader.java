@@ -1,15 +1,13 @@
 package com.reddyz.newz;
 
-import android.content.AsyncTaskLoader;
+import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
-import android.content.Loader;
 
 import java.util.List;
 
 /**
  * Created by reddy on 20-Feb-17.
  */
-
 public class NewsLoader extends AsyncTaskLoader<List<NewsData>> {
 
     String mUrl;

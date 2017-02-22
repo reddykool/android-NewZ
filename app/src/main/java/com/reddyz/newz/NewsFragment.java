@@ -1,9 +1,9 @@
 package com.reddyz.newz;
 
-import android.app.Fragment;
-import android.app.LoaderManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -139,6 +139,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onLoaderReset(Loader<List<NewsData>> loader) {
         mListAdapter.clear();
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
