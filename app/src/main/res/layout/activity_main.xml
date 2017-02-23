@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_activity_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     tools:context="com.reddyz.newz.MainActivity"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorToolBar"
+        app:titleTextColor="@color/colorText"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
