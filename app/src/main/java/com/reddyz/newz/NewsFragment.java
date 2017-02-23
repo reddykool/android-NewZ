@@ -31,6 +31,8 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
  */
 
 public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsData>> {
+    public static final String ARG_URL_KEY = "NewsUrl";
+
     private String mUrl;
     private static final String ESPN_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=espn-cric-info&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
     private static final String THE_HINDU_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=the-hindu&sortBy=top&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
@@ -40,9 +42,24 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     NewsListAdapter mListAdapter;
     ProgressBar mProgressBar;
     TextView mEmptyTextView;
+    boolean mIsConnected;
+
+    public static NewsFragment newInstance(String url) {
+        Bundle arguments = new Bundle();
+        arguments.putString(ARG_URL_KEY, url);
+        NewsFragment fragment = new NewsFragment();
+        fragment.setArguments(arguments);
+        return fragment;
+    }
 
     public NewsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mUrl = getArguments().getString(ARG_URL_KEY);
     }
 
     @Nullable
@@ -80,8 +97,8 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
 
-        boolean isConnected = isInternetAvailable();
-        if(isConnected) {
+        mIsConnected = isInternetAvailable();
+        if(mIsConnected) {
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
@@ -109,7 +126,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
      */
     @Override
     public Loader<List<NewsData>> onCreateLoader(int id, Bundle args) {
-        return new NewsLoader(getActivity(), ESPN_NEWS_FETCH_URL);
+        return new NewsLoader(getActivity(), mUrl);
     }
 
     /**
@@ -151,13 +168,14 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         boolean menuItemHandled = false;
         switch (item.getItemId()) {
             case R.id.menu_refresh :
-                mProgressBar.setVisibility(View.VISIBLE);
-                Loader<List<NewsData>> loader = getLoaderManager().getLoader(NEWS_LOADER_ID);
-                NewsLoader newsLoader = (NewsLoader)loader;
-                newsLoader.setUrl(THE_HINDU_NEWS_FETCH_URL);
-                newsLoader.forceLoad();
+                if(mIsConnected) {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    Loader<List<NewsData>> loader = getLoaderManager().getLoader(NEWS_LOADER_ID);
+                    NewsLoader newsLoader = (NewsLoader) loader;
+                    newsLoader.setUrl(mUrl);
+                    newsLoader.forceLoad();
+                }
                 menuItemHandled = true;
-
                 break;
 
             case R.id.menu_settings :
