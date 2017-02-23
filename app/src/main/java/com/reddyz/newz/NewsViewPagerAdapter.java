@@ -11,31 +11,28 @@ import java.util.List;
  */
 
 public class NewsViewPagerAdapter extends FragmentPagerAdapter {
-    List<String> mUrls;
+    List<NewsCategoryData> mCategories;
 
-    public NewsViewPagerAdapter(FragmentManager fm, List<String> urls) {
+    public NewsViewPagerAdapter(FragmentManager fm, List<NewsCategoryData> categories) {
         super(fm);
-        mUrls = urls;
+        mCategories = categories;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment currentFragment = NewsFragment.newInstance(mUrls.get(position));
+        String url = mCategories.get(position).getUrl();
+        Fragment currentFragment = NewsFragment.newInstance(url);
         return currentFragment;
     }
 
     @Override
     public int getCount() {
-        return mUrls.size();
+        return mCategories.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        //extract "source" from url(source=espn-cric-info&)
-        String urlString = mUrls.get(position);
-        int startIndex = urlString.indexOf("source=");
-        int endIndex = urlString.indexOf("&");
-        String name = urlString.substring(startIndex, endIndex);
-        return name;
+        String title = mCategories.get(position).getTitle();
+        return title;
     }
 }

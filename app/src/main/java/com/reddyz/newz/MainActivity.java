@@ -11,8 +11,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int NEWS_LOADER_ID = 1;
-    private static final String TECH_CHUNCH_NEWS_FETCH_URL_test = "https://newsapi.org/v1/articles?source=techcrunch&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
+    private static final String TECH_CHUNCH_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=techcrunch&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
     private static final String ESPN_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=espn-cric-info&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
     private static final String GOOGLE_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=google-news&sortBy=top&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
     private static final String THE_HINDU_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=the-hindu&sortBy=top&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
@@ -25,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<String> urlList = new ArrayList<String>();
-        urlList.add(ESPN_NEWS_FETCH_URL);
-        urlList.add(GOOGLE_NEWS_FETCH_URL);
-        urlList.add(THE_HINDU_NEWS_FETCH_URL);
-        urlList.add(TECH_CHUNCH_NEWS_FETCH_URL_test);
+        List<NewsCategoryData> categories = new ArrayList<>();
+        categories.add(new NewsCategoryData(THE_HINDU_NEWS_FETCH_URL, getString(R.string.news_category_india)));
+        categories.add(new NewsCategoryData(GOOGLE_NEWS_FETCH_URL, getString(R.string.news_category_world)));
+        categories.add(new NewsCategoryData(ESPN_NEWS_FETCH_URL, getString(R.string.news_category_sports)));
+        categories.add(new NewsCategoryData(TECH_CHUNCH_NEWS_FETCH_URL, getString(R.string.news_category_technology)));
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        NewsViewPagerAdapter pagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(), urlList);
+        NewsViewPagerAdapter pagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(), categories);
         viewPager.setAdapter(pagerAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);

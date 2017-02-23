@@ -16,5 +16,9 @@
 
     <string name="settings_sort_by_latest_label">"Latest News"</string>
     <string name="settings_sort_by_latest_value" translatable="false">"latest"</string>
+    <string name="news_category_india">India</string>
+    <string name="news_category_world">World</string>
+    <string name="news_category_sports">Sports</string>
+    <string name="news_category_technology">Technology</string>
 
 </resources>
