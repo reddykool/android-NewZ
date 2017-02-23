@@ -14,6 +14,7 @@
         android:textSize="@dimen/list_primary_text_size"
         android:maxLines="2"
         android:ellipsize="end"
+        android:textColor="@android:color/black"
         tools:text="Title"/>
 
     <TextView
@@ -22,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/list_item_title"
         android:textSize="@dimen/list_secondary_text_size"
+        android:maxLength="15"
+        android:ellipsize="marquee"
         tools:text="Author"/>
 
     <TextView

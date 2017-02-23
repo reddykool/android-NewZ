@@ -5,22 +5,28 @@
     android:id="@+id/main_activity_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     tools:context="com.reddyz.newz.MainActivity"
     android:orientation="vertical">
 
+    <!--
     <android.support.v7.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorToolBar"
+        android:background="@color/colorPrimary"
         app:titleTextColor="@color/colorText"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        -->
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabBackground="@color/colorToolBar"
+        app:tabTextColor="@android:color/white"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

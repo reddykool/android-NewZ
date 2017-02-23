@@ -10,8 +10,7 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:layout_margin="@dimen/list_padding"/>
+        android:background="@android:color/white"/>
 
     <ProgressBar
         android:id="@+id/list_progress_bar"

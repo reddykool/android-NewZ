@@ -34,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
         NewsViewPagerAdapter pagerAdapter = new NewsViewPagerAdapter(getSupportFragmentManager(), categories);
         viewPager.setAdapter(pagerAdapter);
 
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         if(toolbar != null) {
             setSupportActionBar(toolbar);
         }
+        */
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }
