@@ -1,5 +1,7 @@
 package com.reddyz.newz;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
@@ -28,6 +30,10 @@ import java.util.List;
 public final class QueryUtils {
 
     public static final String LOG_TAG = QueryUtils.class.getName();
+    private static final int HTTP_READ_TIMEOUT = 10000;
+    private static final int HTTP_CONNECTION_TIMEOUT = 15000;
+    private static final int HTTP_RESPONSE_OK = 200;
+    private static final String HTTP_REQUEST_GET = "GET";
 
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
@@ -55,7 +61,67 @@ public final class QueryUtils {
         List<NewsData> newsList = extractArticlesFromJson(jsonResponse);
 
         return newsList;
+    }
 
+    /**
+     * Fetch the image through input url and return a {@link Bitmap} image object .
+     */
+    public static Bitmap fetchNewsImage(String imageUrlString) {
+        Log.i(LOG_TAG, "fetchNewsImage: Image Url ::" + imageUrlString);
+
+        //create url object
+        URL url = createUrl(imageUrlString);
+
+        //request for news image data through the url info.
+        Bitmap imageBitmap = makeHttpRequestForImage(url);
+
+        return imageBitmap;
+
+    }
+
+    /**
+     * Make an HTTP request to the given image URL and return image Bitmap by parsing the response.
+     */
+    private static Bitmap makeHttpRequestForImage(URL imageUrl) {
+        Bitmap imageBitmap = null;
+        if(imageUrl == null) {
+            Log.e(LOG_TAG, "makeHttpRequestForImage : image url is NULL");
+            return imageBitmap;
+        }
+
+        HttpURLConnection urlConnection = null;
+        InputStream inStream = null;
+
+        try {
+            urlConnection = (HttpURLConnection)imageUrl.openConnection();
+            urlConnection.setReadTimeout(HTTP_READ_TIMEOUT);
+            urlConnection.setConnectTimeout(HTTP_CONNECTION_TIMEOUT);
+            urlConnection.setRequestMethod(HTTP_REQUEST_GET);
+            urlConnection.connect();
+            if(urlConnection.getResponseCode() == HTTP_RESPONSE_OK) {
+                inStream = urlConnection.getInputStream();
+                imageBitmap = BitmapFactory.decodeStream(inStream);
+            } else {
+                Log.e(LOG_TAG, "makeHttpRequestForImage : urlConnection Response code: " + urlConnection.getResponseCode());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, "makeHttpRequestForImage: urlConnection -> IOException");
+        } finally {
+            if(urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if(inStream != null) {
+                try {
+                    inStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e(LOG_TAG, "makeHttpRequestForImage: inputStream -> IOException");
+                }
+            }
+        }
+
+        return imageBitmap;
     }
 
     /**
@@ -99,11 +165,11 @@ public final class QueryUtils {
 
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000);
-            urlConnection.setConnectTimeout(15000);
-            urlConnection.setRequestMethod("GET");
+            urlConnection.setReadTimeout(HTTP_READ_TIMEOUT);
+            urlConnection.setConnectTimeout(HTTP_CONNECTION_TIMEOUT);
+            urlConnection.setRequestMethod(HTTP_REQUEST_GET);
             urlConnection.connect();
-            if(urlConnection.getResponseCode() == 200) {
+            if(urlConnection.getResponseCode() == HTTP_RESPONSE_OK) {
                 inStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inStream);
             } else {

@@ -33,12 +33,9 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<NewsData>> {
     public static final String ARG_URL_KEY = "NewsUrl";
 
-    private String mUrl;
-    private static final String ESPN_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=espn-cric-info&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
-    private static final String THE_HINDU_NEWS_FETCH_URL = "https://newsapi.org/v1/articles?source=the-hindu&sortBy=top&apiKey=a88da1ce6d0e4b51a643f4ba415e6b98";
-
     private static final int NEWS_LOADER_ID = 1;
 
+    private String mUrl;
     NewsListAdapter mListAdapter;
     ProgressBar mProgressBar;
     TextView mEmptyTextView;
@@ -89,11 +86,12 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NewsData currentItem = (NewsData) parent.getItemAtPosition(position);
-                Uri detailUri = Uri.parse(currentItem.getUrl());
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, detailUri);
-                if(browserIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    startActivity(browserIntent);
-                }
+                Intent detailIntent = new Intent(getActivity(), NewsDetailActivity.class);
+                detailIntent.putExtra(NewsDetailActivity.NEWS_DETAIL_URL, currentItem.getUrl());
+                detailIntent.putExtra(NewsDetailActivity.NEWS_IMAGE_URL, currentItem.getUrlToImage());
+                detailIntent.putExtra(NewsDetailActivity.NEWS_DETAIL_TITLE, currentItem.getTitle());
+                detailIntent.putExtra(NewsDetailActivity.NEWS_DETAIL_TEXT, currentItem.getDescription());
+                startActivity(detailIntent);
             }
         });
 
