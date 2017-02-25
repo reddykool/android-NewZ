@@ -1,10 +1,13 @@
 package com.reddyz.newz;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by reddy on 20-Feb-17.
  */
 
-public class NewsData {
+public class NewsData implements Parcelable {
     private String mAuthor;
     private String mTitle;
     private String mDateTime;
@@ -43,5 +46,45 @@ public class NewsData {
 
     public String getUrlToImage() {
         return mUrlToImage;
+    }
+
+
+    // Implementing Parcelable interface
+
+    protected NewsData(Parcel in) {
+        mAuthor = in.readString();
+        mTitle = in.readString();
+        mDateTime = in.readString();
+        mDescription = in.readString();
+        mUrl = in.readString();
+        mUrlToImage = in.readString();
+    }
+
+    public static final Creator<NewsData> CREATOR = new Creator<NewsData>() {
+        @Override
+        public NewsData createFromParcel(Parcel in) {
+            return new NewsData(in);
+        }
+
+        @Override
+        public NewsData[] newArray(int size) {
+            return new NewsData[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAuthor);
+        dest.writeString(mTitle);
+        dest.writeString(mDateTime);
+        dest.writeString(mDescription);
+        dest.writeString(mUrl);
+        dest.writeString(mUrlToImage);
     }
 }

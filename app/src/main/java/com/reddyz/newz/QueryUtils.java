@@ -20,6 +20,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -241,6 +242,12 @@ public final class QueryUtils {
                 String url = article.getString("url");
                 String urlToImage = article.getString("urlToImage");
                 String dateTime = article.getString("publishedAt");
+                if(author == "null") {
+                    author = "";
+                }
+                if(dateTime == "null") {
+                    dateTime = "";
+                }
 
                 Log.i(LOG_TAG, "Json parse: " + author +" ,"+title+" ,"+description);
                 NewsData data = new NewsData(author, title, description, url, urlToImage, dateTime);

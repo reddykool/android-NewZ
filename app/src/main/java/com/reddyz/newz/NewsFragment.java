@@ -36,6 +36,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     private static final int NEWS_LOADER_ID = 1;
 
     private String mUrl;
+    private List<NewsData> mNewsList;
     NewsListAdapter mListAdapter;
     ProgressBar mProgressBar;
     TextView mEmptyTextView;
@@ -76,8 +77,10 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         // set empty state (text)view to show relevant info(text) when the list is empty.
         newsListView.setEmptyView(mEmptyTextView);
 
+        //Create an array list of news, which will be populated by loader(after fetching data ) thru listAdapter
+        mNewsList = new ArrayList<NewsData>();
         // Create a new adapter{@link NewsListAdapter} with empty list of news
-        mListAdapter = new NewsListAdapter(getActivity(), R.layout.news_list_item, new ArrayList<NewsData>());
+        mListAdapter = new NewsListAdapter(getActivity(), R.layout.news_list_item, mNewsList);
         // Set the adapter to {@link ListView}, so the list can be populated in the user interface
         newsListView.setAdapter(mListAdapter);
 
@@ -85,12 +88,9 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NewsData currentItem = (NewsData) parent.getItemAtPosition(position);
                 Intent detailIntent = new Intent(getActivity(), NewsDetailActivity.class);
-                detailIntent.putExtra(NewsDetailActivity.NEWS_DETAIL_URL, currentItem.getUrl());
-                detailIntent.putExtra(NewsDetailActivity.NEWS_IMAGE_URL, currentItem.getUrlToImage());
-                detailIntent.putExtra(NewsDetailActivity.NEWS_DETAIL_TITLE, currentItem.getTitle());
-                detailIntent.putExtra(NewsDetailActivity.NEWS_DETAIL_TEXT, currentItem.getDescription());
+                detailIntent.putParcelableArrayListExtra(NewsDetailActivity.NEWS_LIST, (ArrayList<NewsData>)mNewsList);
+                detailIntent.putExtra(NewsDetailActivity.ITEM_POSITION, position);
                 startActivity(detailIntent);
             }
         });
@@ -136,6 +136,8 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onLoadFinished(Loader<List<NewsData>> loader, List<NewsData> data) {
         mProgressBar.setVisibility(View.GONE);
 
+        //mNewsList is passed to mListAdapter when created. Hence, change in listAdapter seems to update
+        //mNewsList as well automatically. Therefore , no need to update mnewsList again here.
         mListAdapter.clear();
         if(data != null && !data.isEmpty()) {
             mListAdapter.addAll(data);
